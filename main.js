@@ -7,10 +7,13 @@ let window = null;
 
 function createWindow() {
   window = new BrowserWindow({
-    width: 300,
-    height: 500,
+    width: 400,
+    height: 200,
     show: false,
+    frame: false,
+    resizable: false,
     transparent: true,
+    alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -38,10 +41,6 @@ const toggleWindow = () => {
   return showWindow();
 }
 
-app.on('ready', () => {
-  createWindow();
-});
-
 app.on('window-all-closed', () => {
   if(process.platform !== 'darwin') {
     app.quit();
@@ -52,6 +51,10 @@ app.on('activate', () => {
   if(BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+app.on('browser-window-blur', () => {
+  window.hide();
 });
 
 app.on('ready', () => {

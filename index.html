@@ -7,8 +7,20 @@
       http-equiv="Content-Security-Policy"
       content="script-src 'self' 'unsafe-inline';"
     />
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./script.js"></script>
   </head>
-  <body style="background-color: red;">
-    <h1>Hello World!</h1>
+  <body class="glass">
+    <div class="controls">
+      <!-- <button class="btn btn-sm play">
+        <div class="ic ic-play">play</div>
+      </button> -->
+      <button class="btn btn-large" id="playpause">
+        <div class="ic ic-play">play</div>
+      </button>
+      <!-- <button class="btn btn-sm play">
+        <div class="ic ic-play">play</div>
+      </button> -->
+    </div>
   </body>
 </html>
