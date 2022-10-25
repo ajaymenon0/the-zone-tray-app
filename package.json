@@ -1,0 +1,16 @@
+{
+  "name": "beinthezone-tray",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "<ajaymenon0@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^21.2.0"
+  },
+  "dependencies": {
+    "electron-traywindow-positioner": "^1.1.1"
+  }
+}
