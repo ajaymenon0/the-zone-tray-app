@@ -12,6 +12,7 @@ class Noise {
     this.gainNode = this.audioContext.createGain();
     this.gainNode.gain.value = 0;
     this.volume = settings.volume ?? 0.5; // init volume
+    this.isPlaying = false;
 
     this.filterNode = this.audioContext.createBiquadFilter();
     this.filterNode.type = 'lowpass';
@@ -40,12 +41,14 @@ class Noise {
     this.noiseNode.loop = true;
     this.gainNode.gain.setTargetAtTime(this.volume, this.audioContext.currentTime, 1); // Slight Fade in
     this.noiseNode.start();
+    this.isPlaying = true;
   }
 
   stop() {
     // Slight fade out and stop
     this.gainNode.gain.setTargetAtTime(0, this.audioContext.currentTime, 0.1);
     this.noiseNode.stop(this.audioContext.currentTime + 1);
+    this.isPlaying = false;
   }
 }
 
@@ -110,27 +113,8 @@ const volClick = (event) => {
   
 };
 
-// let vol = 0;
-
-// function volClick(event){
-
-//   var startX = event.clientX;
-//   var startY = event.clientY;
-//   var startVol = vol;
-
-//   function drag(e){
-//     volDrag(e.clientX,e.clientY,startX,startY,startVol);
-//   }
-
-//   window.addEventListener('mousemove', drag);
-//   window.addEventListener('mouseup', function undrag(){
-//     window.removeEventListener('mousemove', drag);
-//     window.removeEventListener('mouseup', undrag);
-//   });
-// }
-
 const checkStartNoise = debounce(() => {
-  if(newNoise) {
+  if(newNoise.isPlaying) {
     newNoise.stop();
     initNoiseMaker();
   }
