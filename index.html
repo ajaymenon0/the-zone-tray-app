@@ -19,7 +19,8 @@
       <button class="btn btn-large" id="playpause">
         <div class="ic ic-play">play</div>
       </button>
-      <button class="btn btn-sm play">
+      <button class="btn btn-sm play" onmousedown="cutoffChange(event)">
+        <div id="cutoff-dial" class="btn-dial"></div>
         <span id="cutoff" class="cutoff"></span>
       </button>
     </div>

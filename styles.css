@@ -166,11 +166,11 @@ body {
   left: -.337em;
 }
 
-.btn-dial {
+.btn-dial, #cutoff-dial {
   width: 50px;
   height: 50px;
   border: 2px solid transparent;
-  border-left: 2px solid tomato;
+  border-left: 4px solid tomato;
   position: absolute;
   border-radius: 50%;
   z-index: -1;

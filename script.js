@@ -90,6 +90,7 @@ function initNoiseMaker(){
 let volDial = document.getElementById('vol');
 let speaker = document.getElementById('speaker');
 let dial = document.getElementById('dial');
+let cutoffDial = document.getElementById('cutoff-dial');
 let body = document.body;
 
 const volClick = (event) => {
@@ -110,7 +111,26 @@ const volClick = (event) => {
     body.style.cursor = 'unset';
     window.removeEventListener('mouseup', undrag);
   });
-  
+};
+
+const cutoffChange = (event) => {
+  // localStorage.setItem('volume', e);
+  var startX = event.clientX;
+  var startY = event.clientY;
+  var startVol = vol;
+
+  function drag(e){
+    body.style.cursor = 'grabbing';
+    cfDrag(e.clientX,e.clientY,startX,startY,startVol);
+  }
+  // const drag = debounce((e) => {volDrag(e.clientX,e.clientY,startX,startY,startVol);});
+
+  window.addEventListener('mousemove', drag);
+  window.addEventListener('mouseup', function undrag(){
+    window.removeEventListener('mousemove', drag);
+    body.style.cursor = 'unset';
+    window.removeEventListener('mouseup', undrag);
+  });
 };
 
 const checkStartNoise = debounce(() => {
@@ -132,11 +152,30 @@ const updateVol = () => {
   checkStartNoise();
 }
 
+const updateCf = () => {
+  cutoffDial.style.transform = `rotate(${vol * 1.8}deg)`;
+  if(vol < 1) {
+    speaker.style.opacity = 0.4;
+    dial.style.opacity = 0.4;
+  } else {
+    speaker.style.opacity = 1;
+    dial.style.opacity = 1;
+  }
+  checkStartNoise();
+}
+
 function volDrag(x,y, startX, startY, startVol){
   var moveDist = (x - startX + startY - y) / window.innerHeight;
-  var volChange = (moveDist / 0.25) * 100;
+  var volChange = (moveDist / 0.75) * 100;
   vol = Math.max(Math.min((startVol + volChange), 100),0);
   updateVol();
+}
+
+function cfDrag(x,y, startX, startY, startVol){
+  var moveDist = (x - startX + startY - y) / window.innerHeight;
+  var volChange = (moveDist / 0.75) * 100;
+  vol = Math.max(Math.min((startVol + volChange), 100),0);
+  updateCf();
 }
 
 updateVol();
