@@ -1,16 +1,26 @@
 {
-  "name": "beinthezone-tray",
+  "name": "thezone",
+  "description": "A white noise tray app to help you build focus while working",
   "version": "1.0.0",
   "main": "main.js",
   "author": "<ajaymenon0@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "app:dir": "electron-builder --dir",
+    "app:dist": "electron-builder"
   },
   "devDependencies": {
-    "electron": "^21.2.0"
+    "electron": "^21.2.0",
+    "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "electron-traywindow-positioner": "^1.1.1"
+  },
+  "build": {
+    "appId": "com.electron.thezone",
+    "mac": {
+      "category": "public.app-category.productivity"
+    }
   }
 }
