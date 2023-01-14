@@ -12,17 +12,21 @@
   </head>
   <body class="glass">
     <div class="controls">
-      <button id="vol" class="btn btn-sm" onmousedown="volClick(event)">
-        <div id="dial" class="btn-dial"></div>
-        <span id="speaker" class="speaker"></span>
-      </button>
+      <section title="Volume">
+        <button id="vol" class="btn btn-sm btn-grab" onmousedown="volClick(event)">
+          <div id="dial" class="btn-dial"></div>
+          <span id="speaker" class="speaker"></span>
+        </button>
+      </section>
       <button class="btn btn-large" id="playpause">
         <div class="ic ic-play">play</div>
       </button>
-      <button class="btn btn-sm play" onmousedown="cutoffChange(event)">
-        <div id="cutoff-dial" class="btn-dial"></div>
-        <span id="cutoff" class="cutoff"></span>
-      </button>
+      <section title="Sharpness">
+        <button class="btn btn-sm play btn-grab" onmousedown="cutoffChange(event)">
+          <div id="cutoff-dial" class="btn-dial"></div>
+          <span id="cutoff" class="cutoff"></span>
+        </button>
+      </section>
     </div>
   </body>
 </html>

@@ -176,7 +176,7 @@ body {
   z-index: -1;
 }
 
-#vol {
+.btn-grab {
   cursor: grab;
 }
 

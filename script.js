@@ -1,8 +1,9 @@
-const headTitle = document.title;
 const DEFAULT_VOLUME = 30;
-const DEFAULT_CUTOFF = 300;
+const DEFAULT_CUTOFF = 30;
 let vol = DEFAULT_VOLUME;
 let cutoff = DEFAULT_CUTOFF;
+const CUTOFF_MIN_FREQ = 100;
+const CUTOFF_MAX_FREQ = 1000;
 
 class Noise {
   constructor(settings) {
@@ -52,6 +53,8 @@ class Noise {
   }
 }
 
+const cutoffTransformer = (value) => Math.round(CUTOFF_MIN_FREQ + ((CUTOFF_MAX_FREQ - CUTOFF_MIN_FREQ)/99)*(value - 1));
+
 const playpauseButton = document.getElementById('playpause');
 let newNoise;
 
@@ -81,8 +84,9 @@ function debounce(func, timeout = 300){
 function initNoiseMaker(){
   const settings = {
     volume: vol / 100,
-    cutoff: 300
+    cutoff: cutoffTransformer(cutoff)
   }
+  console.log(settings, cutoff);
   newNoise = new Noise(settings);
   newNoise.play();
 }
@@ -117,11 +121,11 @@ const cutoffChange = (event) => {
   // localStorage.setItem('volume', e);
   var startX = event.clientX;
   var startY = event.clientY;
-  var startVol = vol;
+  var startCf = cutoff;
 
   function drag(e){
     body.style.cursor = 'grabbing';
-    cfDrag(e.clientX,e.clientY,startX,startY,startVol);
+    cfDrag(e.clientX,e.clientY,startX,startY,startCf);
   }
   // const drag = debounce((e) => {volDrag(e.clientX,e.clientY,startX,startY,startVol);});
 
@@ -134,7 +138,7 @@ const cutoffChange = (event) => {
 };
 
 const checkStartNoise = debounce(() => {
-  if(newNoise.isPlaying) {
+  if(newNoise?.isPlaying) {
     newNoise.stop();
     initNoiseMaker();
   }
@@ -153,7 +157,7 @@ const updateVol = () => {
 }
 
 const updateCf = () => {
-  cutoffDial.style.transform = `rotate(${vol * 1.8}deg)`;
+  cutoffDial.style.transform = `rotate(${cutoff * 1.8}deg)`;
   if(vol < 1) {
     speaker.style.opacity = 0.4;
     dial.style.opacity = 0.4;
@@ -171,11 +175,12 @@ function volDrag(x,y, startX, startY, startVol){
   updateVol();
 }
 
-function cfDrag(x,y, startX, startY, startVol){
+function cfDrag(x,y, startX, startY, startCf){
   var moveDist = (x - startX + startY - y) / window.innerHeight;
-  var volChange = (moveDist / 0.75) * 100;
-  vol = Math.max(Math.min((startVol + volChange), 100),0);
+  var cfChange = (moveDist / 0.75) * 100;
+  cutoff = Math.max(Math.min((startCf + cfChange), 100),0);
   updateCf();
 }
 
 updateVol();
+updateCf();
